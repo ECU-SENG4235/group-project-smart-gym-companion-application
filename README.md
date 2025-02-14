@@ -44,7 +44,7 @@ Unlike traditional fitness apps, Smart Gym Companion provides an intelligent, ad
 ## Technical Architecture
 
 ### Frontend
-- React Native
+- React
   - Cross-platform support for iOS and Android
   - Native performance optimization
   - Responsive UI design
