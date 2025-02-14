@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Signup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f0f2f5;
+        }
+
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .tab.active {
+            border-bottom: 2px solid #1a73e8;
+            color: #1a73e8;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #1a73e8;
+        }
+
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            background: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #1557b0;
+        }
+
+        .error {
+            color: #d93025;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .password-requirements {
+            font-size: 0.75rem;
+            color: #666;
+            margin-top: 0.25rem;
+        }
+
+        .show-password {
+            position: relative;
+        }
+
+        .show-password input[type="checkbox"] {
+            width: auto;
+            margin-right: 5px;
+        }
+
+        .show-password label {
+            display: inline-block;
+            font-size: 0.875rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="tabs">
+        <div class="tab active" onclick="switchTab('login')">Login</div>
+        <div class="tab" onclick="switchTab('signup')">Sign Up</div>
+    </div>
+
+    <form id="loginForm" onsubmit="return handleLogin(event)">
+        <div class="form-group">
+            <label for="loginEmail">Email</label>
+            <input type="email" id="loginEmail" required>
+            <div id="loginEmailError" class="error">Email not found</div>
+        </div>
+        <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" required>
+            <div id="loginPasswordError" class="error">Incorrect password</div>
+        </div>
+        <div class="form-group show-password">
+            <input type="checkbox" id="showLoginPassword" onclick="togglePassword('loginPassword')">
+            <label for="showLoginPassword">Show password</label>
+        </div>
+        <button type="submit">Login</button>
+    </form>
+
+    <form id="signupForm" style="display: none;" onsubmit="return handleSignup(event)">
+        <div class="form-group">
+            <label for="signupEmail">Email</label>
+            <input type="email" id="signupEmail" required>
+            <div id="signupEmailError" class="error">Email already exists</div>
+        </div>
+        <div class="form-group">
+            <label for="signupPassword">Password</label>
+            <input type="password" id="signupPassword" required pattern="^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$">
+            <div class="password-requirements">
+                Password must contain:
+                <ul>
+                    <li>At least 8 characters</li>
+                    <li>One uppercase letter</li>
+                    <li>One number</li>
+                    <li>One special character (!@#$%^&*)</li>
+                </ul>
+            </div>
+            <div id="signupPasswordError" class="error">Password doesn't meet requirements</div>
+        </div>
+        <div class="form-group show-password">
+            <input type="checkbox" id="showSignupPassword" onclick="togglePassword('signupPassword')">
+            <label for="showSignupPassword">Show password</label>
+        </div>
+        <button type="submit">Sign Up</button>
+    </form>
+</div>
+
+<script>
+    function switchTab(tab) {
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const tabs = document.querySelectorAll('.tab');
+
+        if (tab === 'login') {
+            loginForm.style.display = 'block';
+            signupForm.style.display = 'none';
+            tabs[0].classList.add('active');
+            tabs[1].classList.remove('active');
+        } else {
+            loginForm.style.display = 'none';
+            signupForm.style.display = 'block';
+            tabs[0].classList.remove('active');
+            tabs[1].classList.add('active');
+        }
+
+        // Clear all error messages when switching tabs
+        document.querySelectorAll('.error').forEach(error => {
+            error.style.display = 'none';
+        });
+    }
+
+    function togglePassword(inputId) {
+        const passwordInput = document.getElementById(inputId);
+        passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
+    }
+
+    function handleLogin(event) {
+        event.preventDefault();
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+
+        // Simulate checking email existence and password validation
+        const emailExists = true; // This would normally check against a database
+        const passwordCorrect = false; // This would normally validate against stored password
+
+        const emailError = document.getElementById('loginEmailError');
+        const passwordError = document.getElementById('loginPasswordError');
+
+        emailError.style.display = emailExists ? 'none' : 'block';
+        passwordError.style.display = emailExists && !passwordCorrect ? 'block' : 'none';
+
+        if (emailExists && passwordCorrect) {
+            // Successful login logic here
+            console.log('Login successful');
+        }
+
+        return false;
+    }
+
+    function handleSignup(event) {
+        event.preventDefault();
+        const email = document.getElementById('signupEmail').value;
+        const password = document.getElementById('signupPassword').value;
+
+        // Simulate checking if email already exists
+        const emailExists = false; // This would normally check against a database
+
+        const emailError = document.getElementById('signupEmailError');
+        const passwordError = document.getElementById('signupPasswordError');
+
+        // Password validation regex
+        const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
+        const passwordValid = passwordRegex.test(password);
+
+        emailError.style.display = emailExists ? 'block' : 'none';
+        passwordError.style.display = !passwordValid ? 'block' : 'none';
+
+        if (!emailExists && passwordValid) {
+            // Successful signup logic here
+            console.log('Signup successful');
+        }
+
+        return false;
+    }
+</script>
+</body>
+</html>
