@@ -5,7 +5,7 @@ function MyComponent() {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:3000/api/data")
+        axios.get("http://localhost:4000/login")
             .then(response => {
                 setUsers(response.data);
             })

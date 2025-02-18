@@ -1,48 +1,46 @@
 const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
 const cors = require("cors");
-const bodyParser = require("body-parser");
+const bcrypt = require("bcrypt");
 
 const app = express();
+const PORT = 4000;
+app.use(express.json());
 app.use(cors());
-app.use(bodyParser.json());
 
-const db = new sqlite3.Database("./userdb.db", (err) => {
-    if (err) {
-        console.error("Error connecting to SQLite database:", err);
-    } else {
-        console.log("Connected to SQLite database");
-    }
+
+const db = new sqlite3.Database("./userdb.db", sqlite3.OPEN_READWRITE, (err) => {
+    if (err) return console.error(err.message);
+    console.log("Connected to SQLite database.");
 });
 
 
-app.get("/api/data", (req, res) => {
-    db.all("SELECT id, email FROM users", [], (err, rows) => {
-        if (err) {
-            res.status(500).json({ message: "Server error" });
-        } else {
-            res.json(rows);
-        }
-    });
-});
-
-app.post("/register", (req, res) => {
+app.post("/login", async (req, res) => {
     const { email, password } = req.body;
+    db.get("SELECT * FROM users WHERE email = ?", [email], async (err, user) => {
+        if (err) return res.status(500).json({ error: err.message });
+        if (!user) return res.status(400).json({ error: "Email not found" });
 
-    if (!email || !password) {
-        return res.status(400).json({ message: "All fields are required" });
-    }
+        const match = await bcrypt.compare(password, user.password);
+        if (!match) return res.status(401).json({ error: "Incorrect password" });
 
-    const query = "INSERT INTO users (email, password) VALUES (?, ?)";
-    db.run(query, [email, password], function (err) {
-        if (err) {
-            return res.status(500).json({ message: "User registration failed" });
-        }
-        res.status(201).json({ message: "User registered successfully", userId: this.lastID });
+        res.json({ message: "Login successful", user });
     });
 });
 
 
-app.listen(3000, () => {
-    console.log("Server running on port 3000");
+app.post("/signup", async (req, res) => {
+    const { email, password } = req.body;
+    db.get("SELECT * FROM users WHERE email = ?", [email], async (err, user) => {
+        if (user) return res.status(400).json({ error: "Email already exists" });
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+        db.run("INSERT INTO users (email, password) VALUES (?, ?)", [email, hashedPassword], (err) => {
+            if (err) return res.status(500).json({ error: err.message });
+            res.json({ message: "Signup successful" });
+        });
+    });
 });
+
+app.listen(PORT, () => console.log("Server running on ${PORT}"));
+
