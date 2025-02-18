@@ -1,6 +1,5 @@
-require("node_modules/dotenv").config();
 const express = require("express");
-const mysql = require("mysql");
+const sqlite3 = require("sqlite3").verbose();
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
@@ -8,23 +7,25 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-
-const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "yourpassword", 
-    database: "userdb",
-});
-
-db.connect((err) => {
+const db = new sqlite3.Database("./userdb.db", (err) => {
     if (err) {
-        console.error("Database connection failed:", err);
+        console.error("Error connecting to SQLite database:", err);
     } else {
-        console.log("Connected to MySQL");
+        console.log("Connected to SQLite database");
     }
 });
 
-// User Registration Route
+
+app.get("/api/data", (req, res) => {
+    db.all("SELECT id, email FROM users", [], (err, rows) => {
+        if (err) {
+            res.status(500).json({ message: "Server error" });
+        } else {
+            res.json(rows);
+        }
+    });
+});
+
 app.post("/register", (req, res) => {
     const { email, password } = req.body;
 
@@ -33,16 +34,15 @@ app.post("/register", (req, res) => {
     }
 
     const query = "INSERT INTO users (email, password) VALUES (?, ?)";
-    db.query(query, [email, password], (err, result) => {
+    db.run(query, [email, password], function (err) {
         if (err) {
-            console.error("Error inserting user:", err);
-            return res.status(500).json({ message: "Server error" });
+            return res.status(500).json({ message: "User registration failed" });
         }
-        res.status(201).json({ message: "User registered successfully" });
+        res.status(201).json({ message: "User registered successfully", userId: this.lastID });
     });
 });
 
-// Start Server
-app.listen(8081, () => {
-    console.log("Server running on port 8081");
+
+app.listen(3000, () => {
+    console.log("Server running on port 3000");
 });
