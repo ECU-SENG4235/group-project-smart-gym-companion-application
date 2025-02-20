@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Login-Signup.css";
 
 const LoginSignup = () => {
+    const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState("login");
     const [loginData, setLoginData] = useState({ email: "", password: "" });
     const [signupData, setSignupData] = useState({ email: "", password: "" });
@@ -43,6 +45,10 @@ const LoginSignup = () => {
         } catch (error) {
             setErrors({ email: "", password: error.message });
         }
+        
+        setTimeout(() => {
+            navigate("/main");
+        }, 1000);
     };
 
     // **Handle Signup**
