@@ -1,0 +1,120 @@
+/* Global Styles */
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+body {
+    background-color: #F0F4F8;
+    margin: 0;
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* General Page Styling */
+.main-container {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: linear-gradient(135deg, #007BFF, #0056b3);
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.nav-links {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-links button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+
+.nav-links button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Content Layout */
+.content {
+    display: flex;
+    justify-content: flex-start;
+    padding: 40px 20px;
+}
+
+.left-section {
+    max-width: 400px;
+}
+
+/* Date and Time Display */
+.date-time {
+    font-size: 18px;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* Summary Card */
+.summary-card {
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.summary-card h3 {
+    font-size: 22px;
+    color: #34495e;
+    margin-bottom: 10px;
+}
+
+.summary-card p {
+    font-size: 16px;
+    color: #555;
+    white-space: pre-line;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .nav-links {
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .nav-links button {
+        font-size: 14px;
+        margin: 5px;
+    }
+
+    .content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .left-section {
+        text-align: center;
+        max-width: 100%;
+    }
+}
