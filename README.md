@@ -31,7 +31,7 @@ Unlike traditional fitness apps, Smart Gym Companion provides an intelligent, ad
 - Social features for workout sharing and support
 ## Technical Architecture
 ### Frontend
-- React Native
+- React.js
   - Cross-platform support for iOS and Android
   - Native performance optimization
   - Responsive UI design
@@ -41,7 +41,7 @@ Unlike traditional fitness apps, Smart Gym Companion provides an intelligent, ad
   - Real-time data processing
   - Scalable server infrastructure
 ### Database
-- PostgreSQL
+- SQLite3
   - Robust data management
   - Complex query optimization
   - Data integrity and security
