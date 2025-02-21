@@ -33,14 +33,14 @@ const MainPage = () => {
             const today = new Date().toISOString().split("T")[0];
 
             // Fetch workouts
-            const workoutResponse = await axios.get(`/api/workouts?date=${today}`);
+            const workoutResponse = await axios.get(`/api/workouts/today?date=${today}`);
             setTodayWorkouts(workoutResponse.data.length > 0
                 ? workoutResponse.data.map(w => `• ${w.type} (${w.duration} mins)`).join("\n")
                 : "No workouts logged today"
             );
 
             // Fetch calorie intake
-            const calorieResponse = await axios.get(`/api/calories?date=${today}`);
+            const calorieResponse = await axios.get(`/api/calories/today?date=${today}`);
             setTodayCalories(calorieResponse.data.totalCalories
                 ? `Total Calories Today: ${calorieResponse.data.totalCalories}`
                 : "No calories logged today"
