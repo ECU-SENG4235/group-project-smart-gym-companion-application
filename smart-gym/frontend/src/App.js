@@ -3,15 +3,21 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginSignup from './user/Login-Signup';
 import MainPage from './landing/MainPage';
 import WorkoutLog from './workout/WorkoutLog';
-
+import DailyTip from './components/DailyTip'; //  Import DailyTip Component
 
 function App() {
   return (
     <Router>
         <Routes>
           <Route path="/" element={<LoginSignup />} />
-          <Route path="/main" element={<MainPage />} />
-          <Route path="/workout-log" element={<WorkoutLog />} />
+          <Route path="/main" element={<>
+            <MainPage />
+            <DailyTip /> {/*  Add Daily Tip Below Main Page */}
+          </>} />
+          <Route path="/workout-log" element={<>
+            <WorkoutLog />
+            <DailyTip /> {/*  Add Daily Tip Below Workout Log */}
+          </>} />
         </Routes>
     </Router>
   );
