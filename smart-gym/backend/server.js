@@ -3,8 +3,8 @@ const cors = require("cors");
 const bcrypt = require("bcrypt");
 const sqlite3 = require("sqlite3").verbose();
 const jwt = require("jsonwebtoken");
-const cron = require("node-cron"); //  Added for scheduling
-const notificationRoutes = require("./routes/notifications"); //  Added for daily tips
+const cron = require("node-cron"); // Added for scheduling
+const notificationRoutes = require("./routes/notifications"); // Added for daily tips
 
 const app = express();
 const PORT = 4000;
@@ -16,8 +16,6 @@ app.use(cors());
 app.use("/api/workouts", workoutRoutes);
 app.use("/api/notifications", notificationRoutes); // Register new route for daily tips
 
-
-
 const db = new sqlite3.Database("./userdb.db", sqlite3.OPEN_READWRITE, (err) => {
     if (err) return console.error(err.message);
     console.log("Connected to SQLite database.");
@@ -25,7 +23,7 @@ const db = new sqlite3.Database("./userdb.db", sqlite3.OPEN_READWRITE, (err) => 
 
 module.exports = db;
 
-//  Schedule a daily tip notification at 9 AM
+// Schedule a daily tip notification at 9 AM
 cron.schedule("0 9 * * *", () => {
     db.get("SELECT tip FROM tips ORDER BY RANDOM() LIMIT 1", [], (err, row) => {
         if (!err && row) {
@@ -37,7 +35,6 @@ cron.schedule("0 9 * * *", () => {
     scheduled: true,
     timezone: "America/New_York"
 });
-
 
 app.post("/login", async (req, res) => {
     const { email, password } = req.body;
@@ -54,7 +51,6 @@ app.post("/login", async (req, res) => {
     });
 });
 
-
 app.post("/signup", async (req, res) => {
     const { email, password } = req.body;
     db.get("SELECT * FROM users WHERE email = ?", [email], async (err, user) => {
@@ -69,4 +65,3 @@ app.post("/signup", async (req, res) => {
 });
 
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));
-
