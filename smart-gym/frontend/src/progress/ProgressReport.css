@@ -1,0 +1,33 @@
+/* Progress Report Container */
+.progress-report-container {
+    width: 350px;
+    margin: auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Progress Report Title */
+.progress-report-container h2 {
+    margin-bottom: 20px;
+}
+
+/* Progress Report List */
+.progress-report-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* Progress Report List Item */
+.progress-report-container li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+/* No Workouts Message */
+.progress-report-container p {
+    font-style: italic;
+    color: #666;
+}

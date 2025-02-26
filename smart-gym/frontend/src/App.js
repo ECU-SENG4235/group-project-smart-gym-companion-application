@@ -4,7 +4,7 @@ import LoginSignup from './user/Login-Signup';
 import MainPage from './landing/MainPage';
 import WorkoutLog from './workout/WorkoutLog';
 import DailyTip from './components/DailyTip'; //  Import DailyTip Component
-
+import ProgressReport from "./progress/ProgressReport";
 function App() {
   return (
     <Router>
