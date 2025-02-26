@@ -18,6 +18,7 @@ function App() {
             <WorkoutLog />
             <DailyTip /> {/*  Add Daily Tip Below Workout Log */}
           </>} />
+          <Route path="/profile" element={<ProfileEdit />} />
         </Routes>
     </Router>
   );

@@ -9,12 +9,14 @@ const notificationRoutes = require("./routes/notifications"); // Added for daily
 const app = express();
 const PORT = 4000;
 const workoutRoutes = require("./routes/workouts");
+const profileRoutes = require('./routes/profile');
 const fetchRoutes = require("./routes/fetch");
 
 app.use(express.json());
 app.use(cors());
 app.use("/api/workouts", workoutRoutes);
 app.use("/api/notifications", notificationRoutes); // Register new route for daily tips
+app.use('/profile', profileRoutes);
 
 const db = new sqlite3.Database("./userdb.db", sqlite3.OPEN_READWRITE, (err) => {
     if (err) return console.error(err.message);
