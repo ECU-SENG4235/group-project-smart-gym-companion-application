@@ -3,8 +3,10 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginSignup from './user/Login-Signup';
 import MainPage from './landing/MainPage';
 import WorkoutLog from './workout/WorkoutLog';
-import DailyTip from './components/DailyTip'; //  Import DailyTip Component
+import DailyTip from './components/DailyTip'; // Import DailyTip Component
 import ProgressReport from "./progress/ProgressReport";
+import ProfileEdit from "./user/ProfileEdit"; // Import ProfileEdit Component
+
 function App() {
   return (
     <Router>
@@ -20,7 +22,7 @@ function App() {
           </>} />
           <Route path="/profile" element={<ProfileEdit />} />
         </Routes>
-    </Router>
+      </Router>
   );
 }
 
