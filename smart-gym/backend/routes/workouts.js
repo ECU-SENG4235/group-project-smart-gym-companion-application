@@ -35,7 +35,7 @@ router.get("/", authenticateUser, async (req, res) => {
 
     try {
         const query = "SELECT * FROM workouts WHERE user_id = ? ORDER BY date DESC";
-        const [workouts] = await db.query(query, [userId]);
+        const [workouts] = db.query(query, [userId]);
 
         res.json(workouts);
     } catch (error) {
@@ -44,20 +44,18 @@ router.get("/", authenticateUser, async (req, res) => {
     }
 });
 
-// GET: Fetch today's workouts
-router.get("/today", authenticateUser, async (req, res) => {
-    const userId = req.user.id;
-    const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD format
+router.get("/today", authenticateUser , (req, res) => {
+    const userId = req.user.id; 
+    const today = new Date().toISOString().split("T")[0]; 
 
-    try {
-        const query = "SELECT type, duration FROM workouts WHERE user_id = ? AND date = ?";
-        const [workouts] = await db.query(query, [userId, today]);
-
-        res.json({ workouts });
-    } catch (error) {
-        console.error("Error fetching today's workouts:", error);
-        res.status(500).json({ error: "Database error" });
-    }
+    const query = "SELECT type, duration FROM workouts WHERE user_id = ? AND date = ?";
+    db.all(query, [userId, today], (err, workouts) => {
+        if (err) {
+            console.error("Error fetching today's workouts:", err);
+            return res.status(500).json({ error: "Database error" });
+        }
+        res.json({ workouts }); 
+    });
 });
 
 

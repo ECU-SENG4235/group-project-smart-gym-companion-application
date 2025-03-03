@@ -32,7 +32,7 @@ const LoginSignup = () => {
     const handleLogin = async (event) => {
         event.preventDefault();
         try {
-            const response = await fetch("http://localhost:3000/login", {
+            const response = await fetch("http://localhost:4000/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(loginData),
@@ -42,14 +42,19 @@ const LoginSignup = () => {
 
             if (!response.ok) throw new Error(data.error);
 
-            alert("Login successful!");
+            if (response.ok) {
+                console.log(data);
+                localStorage.setItem("token", data.token);
+                setTimeout(() => {
+                    navigate("/main");
+                }, 1000);
+            }
+
         } catch (error) {
             setErrors({ email: "", password: error.message });
         }
         
-        setTimeout(() => {
-            navigate("/main");
-        }, 1000);
+
     };
 
     // **Handle Signup**
@@ -63,7 +68,7 @@ const LoginSignup = () => {
         }
 
         try {
-            const response = await fetch("http://localhost:3000/signup", {
+            const response = await fetch("http://localhost:4000/signup", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(signupData),

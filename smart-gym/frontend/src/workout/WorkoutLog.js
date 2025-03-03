@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./WorkoutLog.css";
 
 const WorkoutLog = () => {
+    const navigate = useNavigate();
 
     const [workoutDuration, setWorkoutDuration] = useState("");
     const [workoutType, setWorkoutType] = useState("");
@@ -27,6 +29,7 @@ const WorkoutLog = () => {
             }
 
             const token = localStorage.getItem("token");
+            console.log(token);
     
             const response = await axios.post(
                 "http://localhost:4000/api/workouts", 
@@ -47,7 +50,7 @@ const WorkoutLog = () => {
                 alert("Failed to log workout");
             }
         } catch (error) {
-            console.error("Error logging workout:", error);
+            console.error("Error logging workout:", error.response ? error.response.data : error.message);
             alert("Error logging workout");
         }
     };
@@ -78,6 +81,7 @@ const WorkoutLog = () => {
 
             {/* Save Button */}
             <button onClick={saveWorkoutLog}>Save Workout</button>
+            <button onClick={() => navigate("/main")}>Back to Home</button>
         </div>
     );
 };

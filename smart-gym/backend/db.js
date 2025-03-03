@@ -10,7 +10,6 @@ const db = new sqlite3.Database("./userdb.db", sqlite3.OPEN_READWRITE, (err) => 
 
 module.exports = db;
 
-const db = require('./server');
 
 db.run(`CREATE TABLE IF NOT EXISTS tips (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -21,7 +20,12 @@ db.run(`CREATE TABLE IF NOT EXISTS tips (
 });
 
 db.get("SELECT COUNT(*) AS count FROM tips", (err, row) => {
-    if (row.count === 0) {
+    if (err) {
+        console.error("Error counting rows in tips table:", err.message);
+        return;
+    }
+    
+    if (!row || row.count === 0) { 
         const sampleTips = [
             "Stay hydrated throughout your workout!",
             "Consistency is key—small daily improvements lead to big results.",
@@ -35,7 +39,6 @@ db.get("SELECT COUNT(*) AS count FROM tips", (err, row) => {
                 if (err) console.error("Error inserting tip:", err.message);
             });
         });
+        console.log("Sample tips inserted.");
     }
 });
-
-module.exports = db;

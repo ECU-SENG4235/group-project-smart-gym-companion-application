@@ -3,10 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginSignup from './user/Login-Signup';
 import MainPage from './landing/MainPage';
 import WorkoutLog from './workout/WorkoutLog';
-import DailyTip from './components/DailyTip'; // Import DailyTip Component
+import DailyTip from './components/DailyTip'; 
 import ProgressReport from "./progress/ProgressReport";
-import ProfileEdit from "./user/ProfileEdit"; // Import ProfileEdit Component
-
+import ProfileEdit from "./user/ProfileEdit"; 
 function App() {
   return (
     <Router>
@@ -14,13 +13,14 @@ function App() {
           <Route path="/" element={<LoginSignup />} />
           <Route path="/main" element={<>
             <MainPage />
-            <DailyTip /> {/*  Add Daily Tip Below Main Page */}
+            <DailyTip /> 
           </>} />
           <Route path="/workout-log" element={<>
             <WorkoutLog />
-            <DailyTip /> {/*  Add Daily Tip Below Workout Log */}
+            <DailyTip /> 
           </>} />
           <Route path="/profile" element={<ProfileEdit />} />
+          <Route path="/progress-report" element={<ProgressReport />} />
         </Routes>
       </Router>
   );

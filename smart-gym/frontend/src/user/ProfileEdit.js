@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./ProfileEdit.css";
 
 const ProfileEdit = () => {
+    const navigate = useNavigate();
     const [profileData, setProfileData] = useState({
         username: "",
         firstName: "",
@@ -42,7 +44,7 @@ const ProfileEdit = () => {
         /*
         const fetchProfileData = async () => {
             try {
-                const response = await fetch("http://localhost:3000/profile", {
+                const response = await fetch("http://localhost:4000/profile", {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -471,6 +473,7 @@ const ProfileEdit = () => {
                 {errors.submit && <div className="error">{errors.submit}</div>}
                 <button type="submit">Save Profile</button>
             </form>
+            <button onCLick={() => navigate("/main")}>Back to Home</button>
         </div>
     );
 };

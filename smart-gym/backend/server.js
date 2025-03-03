@@ -40,30 +40,42 @@ cron.schedule("0 9 * * *", () => {
 
 app.post("/login", async (req, res) => {
     const { email, password } = req.body;
+
     db.get("SELECT * FROM users WHERE email = ?", [email], async (err, user) => {
         if (err) return res.status(500).json({ error: err.message });
         if (!user) return res.status(400).json({ error: "Email not found" });
 
-        const match = await bcrypt.compare(password, user.password);
-        if (!match) return res.status(401).json({ error: "Incorrect password" });
+        try {
+            const match = await bcrypt.compare(password, user.password);
+            if (!match) return res.status(401).json({ error: "Incorrect password" });
 
-        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET || "your_secret_key", { expiresIn: '1h' });
-
-        res.json({ message: "Login successful", token, user });
+            const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET || "your_secret_key", { expiresIn: '1h' });
+            res.json({ message: "Login successful", token, user });
+        } catch (compareError) {
+            res.status(500).json({ error: "Error verifying password" });
+        }
     });
 });
+
 
 app.post("/signup", async (req, res) => {
     const { email, password } = req.body;
+
     db.get("SELECT * FROM users WHERE email = ?", [email], async (err, user) => {
+        if (err) return res.status(500).json({ error: err.message }); // Handle query error
         if (user) return res.status(400).json({ error: "Email already exists" });
 
-        const hashedPassword = await bcrypt.hash(password, 10);
-        db.run("INSERT INTO users (email, password) VALUES (?, ?)", [email, hashedPassword], (err) => {
-            if (err) return res.status(500).json({ error: err.message });
-            res.json({ message: "Signup successful" });
-        });
+        try {
+            const hashedPassword = await bcrypt.hash(password, 10);
+            db.run("INSERT INTO users (email, password) VALUES (?, ?)", [email, hashedPassword], (insertErr) => {
+                if (insertErr) return res.status(500).json({ error: insertErr.message });
+                res.json({ message: "Signup successful" });
+            });
+        } catch (hashError) {
+            res.status(500).json({ error: "Error hashing password" });
+        }
     });
 });
+
 
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));
