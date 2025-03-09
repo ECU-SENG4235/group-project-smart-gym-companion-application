@@ -7,7 +7,10 @@ const MainPage = () => {
     const [currentDateTime, setCurrentDateTime] = useState("");
     const [todayWorkouts, setTodayWorkouts] = useState("Loading workouts...");
     const [todayCalories, setTodayCalories] = useState("Loading calories...");
+    const [isNavOpen, setIsNavOpen] = useState(false);
     const navigate = useNavigate();
+
+    const toggleNav = () => setIsNavOpen(!isNavOpen);
 
     useEffect(() => {
         const updateDateTime = () => {
@@ -68,7 +71,12 @@ const MainPage = () => {
             {/* Navigation Bar */}
             <nav className="navbar">
                 <h1 className="logo">Smart Gym Companion</h1>
-                <div className="nav-links">
+                <div className="hamburger" onClick={toggleNav}>
+                    <div className={`line ${isNavOpen ? 'open' : ''}`}></div>
+                    <div className={`line ${isNavOpen ? 'open' : ''}`}></div>
+                    <div className={`line ${isNavOpen ? 'open' : ''}`}></div>
+                </div>
+                <div className={`nav-links ${isNavOpen ? 'open' : ''}`}>
                     <button onClick={() => navigate("/workout-log")}>Workout Log</button>
                     <button onClick={() => navigate("/calorie-tracker")}>Calorie Tracker</button>
                     <button onClick={() => navigate("/progress-report")}>Progress Report</button>
