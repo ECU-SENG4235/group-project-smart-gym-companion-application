@@ -19,6 +19,7 @@ body {
     font-family: 'Arial', sans-serif;
     background-color: #f8f9fa;
     min-height: 100vh;
+    padding-top: 27px;
 }
 
 /* Navbar */
@@ -96,25 +97,43 @@ body {
     white-space: pre-line;
 }
 
-/* Responsive Design */
-@media (max-width: 1200px) {
+.hamburger {
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.line {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 4px 0;
+    transition: 0.4s;
+}
+
+/* Show hamburger icon on smaller screens */
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex; /* Show hamburger icon */
+    }
+
     .nav-links {
+        display: none; /* Hide nav links by default */
         flex-direction: column;
-        align-items: flex-end;
+        position: absolute;
+        top: 60px; /* Adjust based on your navbar height */
+        right: 20px;
+        background-color: rgba(0, 123, 255, 0.9); /* Match your navbar color */
+        border-radius: 5px;
+        padding: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .nav-links.open {
+        display: flex; /* Show nav links when open */
     }
 
     .nav-links button {
-        font-size: 14px;
-        margin: 5px;
-    }
-
-    .content {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .left-section {
-        text-align: center;
-        max-width: 100%;
+        margin: 5px 0; /* Add some spacing */
     }
 }

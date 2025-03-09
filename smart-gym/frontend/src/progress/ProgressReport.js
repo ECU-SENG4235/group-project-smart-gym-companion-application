@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './ProgressReport.css'; 
 
 const ProgressReport = () => {
     const [loggedWorkouts, setLoggedWorkouts] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchLoggedWorkouts();
@@ -36,6 +38,7 @@ const ProgressReport = () => {
                     ))}
                 </ul>
             )}
+            <button onClick={() => navigate("/main")}>Back To Home</button>
         </div>
     );
 };
