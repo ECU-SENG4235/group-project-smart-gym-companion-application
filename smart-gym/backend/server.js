@@ -8,6 +8,7 @@ const notificationRoutes = require("./routes/notifications"); // Added for daily
 
 const app = express();
 const PORT = 4000;
+const calorieRoutes = require("./routes/calories");
 const workoutRoutes = require("./routes/workouts");
 const profileRoutes = require('./routes/profile');
 const fetchRoutes = require("./routes/fetch");
@@ -15,6 +16,7 @@ const fetchRoutes = require("./routes/fetch");
 app.use(express.json());
 app.use(cors());
 app.use("/api/workouts", workoutRoutes);
+app.use("/api/calories", calorieRoutes)
 app.use("/api/notifications", notificationRoutes); // Register new route for daily tips
 app.use('/profile', profileRoutes);
 
