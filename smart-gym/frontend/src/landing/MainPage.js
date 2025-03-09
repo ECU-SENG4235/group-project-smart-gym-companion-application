@@ -30,36 +30,37 @@ const MainPage = () => {
         try {
             const today = new Date().toISOString().split("T")[0];
     
-            // Retrieve the token from localStorage
+          
             const token = localStorage.getItem("token");
     
-            // Fetch workouts with the token in the headers
+            
             const workoutResponse = await axios.get(`http://localhost:4000/api/workouts/today`, {
                 headers: { Authorization: `Bearer ${token}` } // Include the token
             });
     
-            // Set today's workouts
+            
             setTodayWorkouts(workoutResponse.data.workouts.length > 0
                 ? workoutResponse.data.workouts.map(w => `• ${w.type} (${w.duration} mins)`).join("\n")
                 : "No workouts logged today"
             );
     
-            /*
+         
             const calorieResponse = await axios.get(`http://localhost:4000/api/calories/today`, {
-                headers: { Authorization: `Bearer ${token}` } // Include the token
+                headers: { Authorization: `Bearer ${token}` } 
             });
     
             // Set today's calorie intake
             setTodayCalories(calorieResponse.data.totalCalories
                 ? `Total Calories Today: ${calorieResponse.data.totalCalories}`
                 : "No calories logged today"
-            );*/
+            );
+ 
             
-        } catch (error) {
-            console.error("Error fetching data:", error.response ? error.response.data : error.message);
-            setTodayWorkouts("Error loading workouts");
-            setTodayCalories("Error loading calories");
-        }
+            } catch (error) {
+                console.error("Error fetching data:", error.response ? error.response.data : error.message);
+                setTodayWorkouts("Error loading workouts");
+                setTodayCalories("Error loading calories");
+            }
     };
     
     return (
