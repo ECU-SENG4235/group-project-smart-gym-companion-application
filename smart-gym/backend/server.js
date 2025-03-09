@@ -4,20 +4,20 @@ const bcrypt = require("bcrypt");
 const sqlite3 = require("sqlite3").verbose();
 const jwt = require("jsonwebtoken");
 const cron = require("node-cron"); // Added for scheduling
-const notificationRoutes = require("./routes/notifications"); // Added for daily tips
 
 const app = express();
 const PORT = 4000;
 const calorieRoutes = require("./routes/calories");
 const workoutRoutes = require("./routes/workouts");
 const profileRoutes = require('./routes/profile');
+const notificationRoutes = require("./routes/DailyNotifications");
 const fetchRoutes = require("./routes/fetch");
 
 app.use(express.json());
 app.use(cors());
 app.use("/api/workouts", workoutRoutes);
 app.use("/api/calories", calorieRoutes)
-app.use("/api/notifications", notificationRoutes); // Register new route for daily tips
+app.use("/api/DailyNotifications", notificationRoutes); // Register new route for daily tips
 app.use('/profile', profileRoutes);
 
 const db = new sqlite3.Database("./userdb.db", sqlite3.OPEN_READWRITE, (err) => {

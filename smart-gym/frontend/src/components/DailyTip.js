@@ -5,7 +5,7 @@ const DailyTip = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch("http://localhost:4000/api/notifications/daily-tip")
+        fetch("http://localhost:4000/api/DailyNotifications/daily-tip")
             .then(response => response.json())
             .then(data => {
                 setTip(data.tip);

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const db = require("../server");
+const db = require("../db");
 
 router.get("/daily-tip", (req, res) => {
     db.get("SELECT tip FROM tips ORDER BY RANDOM() LIMIT 1", [], (err, row) => {
