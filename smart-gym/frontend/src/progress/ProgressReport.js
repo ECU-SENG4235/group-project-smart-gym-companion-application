@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './ProgressReport.css'; // Import the CSS file
+import './ProgressReport.css'; 
 
 const ProgressReport = () => {
     const [loggedWorkouts, setLoggedWorkouts] = useState([]);
@@ -15,7 +15,7 @@ const ProgressReport = () => {
             const response = await axios.get("http://localhost:4000/api/workouts", {
                 headers: { Authorization: `Bearer ${token}` },
             });
-            setLoggedWorkouts(response.data); // Assuming the response data is an array of workouts
+            setLoggedWorkouts(response.data.workouts); 
         } catch (error) {
             console.error("Error fetching workouts:", error);
             alert("Error fetching workouts");

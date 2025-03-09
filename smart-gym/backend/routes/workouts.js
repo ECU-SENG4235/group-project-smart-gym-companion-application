@@ -29,19 +29,17 @@ router.post("/", authenticateUser, (req, res) => {
 });
 
 
-// GET: Fetch user's workout history
-router.get("/", authenticateUser, async (req, res) => {
+router.get("/", authenticateUser , (req, res) => {
     const userId = req.user.id;
 
-    try {
-        const query = "SELECT * FROM workouts WHERE user_id = ? ORDER BY date DESC";
-        const [workouts] = db.query(query, [userId]);
-
-        res.json(workouts);
-    } catch (error) {
-        console.error("Error fetching workouts:", error);
-        res.status(500).json({ error: "Database error" });
-    }
+    const query = "SELECT * FROM workouts WHERE user_id = ? ORDER BY date DESC";
+    db.all(query, [userId], (err, workouts) => {
+        if (err) {
+            console.error("Error fetching workouts:", err);
+            return res.status(500).json({ error: "Database error" });
+        }
+        res.json({ workouts }); 
+    });
 });
 
 router.get("/today", authenticateUser , (req, res) => {
