@@ -3,7 +3,7 @@ const cors = require("cors");
 const bcrypt = require("bcrypt");
 const sqlite3 = require("sqlite3").verbose();
 const jwt = require("jsonwebtoken");
-const cron = require("node-cron"); // Added for scheduling
+const cron = require("node-cron"); 
 
 const app = express();
 const PORT = 4000;
@@ -11,7 +11,7 @@ const calorieRoutes = require("./routes/calories");
 const workoutRoutes = require("./routes/workouts");
 const profileRoutes = require('./routes/profile');
 const notificationRoutes = require("./routes/DailyNotifications");
-const fetchRoutes = require("./routes/fetch");
+const challengeRoutes = require("./routes/challenges");
 
 app.use(express.json());
 app.use(cors());
@@ -19,6 +19,9 @@ app.use("/api/workouts", workoutRoutes);
 app.use("/api/calories", calorieRoutes)
 app.use("/api/DailyNotifications", notificationRoutes); // Register new route for daily tips
 app.use('/profile', profileRoutes);
+app.use("/api/challenges", challengeRoutes);
+
+
 
 const db = new sqlite3.Database("./userdb.db", sqlite3.OPEN_READWRITE, (err) => {
     if (err) return console.error(err.message);
@@ -39,6 +42,11 @@ cron.schedule("0 9 * * *", () => {
     scheduled: true,
     timezone: "America/New_York"
 });
+
+db.run(`ALTER TABLE users ADD COLUMN points INTEGER DEFAULT 0`, [], (err) => {
+    // Ignore error if column already exists
+    console.log("Ensuring users table has points column");
+  });
 
 app.post("/login", async (req, res) => {
     const { email, password } = req.body;
