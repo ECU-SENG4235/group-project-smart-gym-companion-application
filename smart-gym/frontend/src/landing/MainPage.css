@@ -6,6 +6,7 @@
 
 body {
     background-color: #F0F4F8;
+    width:100%;
     margin: 0;
     padding: 16px;
     display: flex;
@@ -109,6 +110,171 @@ body {
     background-color: white;
     margin: 4px 0;
     transition: 0.4s;
+}
+
+/* Add these styles to your MainPage.css file */
+
+/* Challenge Section Styles */
+.challenge-section {
+    margin-top: 1.5rem;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.section-header h3 {
+    margin: 0;
+    color: #333;
+}
+
+.browse-btn {
+    background-color: transparent;
+    color: #0066cc;
+    border: none;
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 0.3rem 0.5rem;
+    border-radius: 4px;
+}
+
+.browse-btn:hover {
+    background-color: #f0f7ff;
+    text-decoration: underline;
+}
+
+.challenge-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.challenge-card {
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.challenge-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.challenge-card h4 {
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+    color: #222;
+}
+
+.progress-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.progress-bar-wrapper {
+    flex-grow: 1;
+    height: 8px;
+    background-color: #e9ecef;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: #4caf50;
+    border-radius: 4px;
+}
+
+.progress-container p {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin: 0;
+    min-width: 40px;
+    text-align: right;
+}
+
+.continue-btn {
+    width: 100%;
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.continue-btn:hover {
+    background-color: #0055b3;
+}
+
+.more-challenges {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    grid-column: 1 / -1;
+}
+
+.more-challenges p {
+    margin: 0;
+    color: #666;
+}
+
+.more-challenges button {
+    background-color: transparent;
+    color: #0066cc;
+    border: none;
+    cursor: pointer;
+    padding: 0.3rem 0.5rem;
+    border-radius: 4px;
+}
+
+.more-challenges button:hover {
+    background-color: #f0f7ff;
+    text-decoration: underline;
+}
+
+.no-challenges {
+    text-align: center;
+    padding: 1.5rem;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+}
+
+.no-challenges p {
+    margin-bottom: 1rem;
+    color: #666;
+}
+
+.no-challenges button {
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.no-challenges button:hover {
+    background-color: #0055b3;
 }
 
 /* Show hamburger icon on smaller screens */

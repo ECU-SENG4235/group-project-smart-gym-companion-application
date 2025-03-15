@@ -7,6 +7,10 @@ import CalorieLog from './workout/CalorieLog';
 import DailyTip from './components/DailyTip'; 
 import ProgressReport from "./progress/ProgressReport";
 import ProfileEdit from "./user/ProfileEdit"; 
+import ChallengeList from "./components/ChallengeList"
+import ChallengeDetail from "./components/ChallengeDetail"
+import UserChallenges from "./components/UserChallenges"
+
 function App() {
   return (
     <Router>
@@ -26,6 +30,10 @@ function App() {
           </>} />
           <Route path="/profile" element={<ProfileEdit />} />
           <Route path="/progress-report" element={<ProgressReport />} />
+
+          <Route path="/challenges" element={<ChallengeList />} />
+          <Route path="/challenge/:id" element={<ChallengeDetail />} />
+          <Route path="/my-challenges" element={<UserChallenges />} />
         </Routes>
       </Router>
   );
