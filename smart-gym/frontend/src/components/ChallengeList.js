@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import "./challenge-detail.css"
 import BackButton from "../img/back-button.png";
 import axios from 'axios';
 
 const ChallengeList = () => {
+  const { id } = useParams();
   const [challenges, setChallenges] = useState([]);
   const [userChallenges, setUserChallenges] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+    const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,23 +61,48 @@ const ChallengeList = () => {
     };
   
     fetchData();
-  }, []);
+  }, [id]);
 
-  const handleJoinChallenge = async (challengeId) => {
-    try {
-      await axios.post(`/api/challenges/${challengeId}/join`);
-      
-      // Update UI to show joined status
-      setChallenges(challenges.map(challenge => 
+const handleJoinChallenge = async (challengeId) => {
+  try {
+    const token = localStorage.getItem("token");
+    
+    if (!token) {
+      console.error("No token found in localStorage.");
+      setError('No token found. Please log in again.');
+      return;
+    }
+    
+    console.log("Raw token:", token);
+    console.log("Auth header:", `Bearer ${token}`);
+    console.log("Joining challenge with ID:", challengeId);
+    
+    const res = await axios.post(
+      `http://localhost:4000/api/challenges/${challengeId}/join`, // Use the passed parameter here
+      {},
+      { 
+        headers: { 
+          Authorization: `Bearer ${token}`
+        } 
+      }
+    );
+    
+    console.log("Response:", res.data);
+    
+    // Update the challenges list to reflect the joined status
+    setChallenges(prevChallenges => 
+      prevChallenges.map(challenge => 
         challenge.id === challengeId 
           ? { ...challenge, joined: true } 
           : challenge
-      ));
-    } catch (err) {
-      setError('Failed to join challenge');
-    }
-  };
-
+      )
+    );
+    
+  } catch (err) {
+    console.error("Full error:", err);
+    setError('Failed to join challenge');
+  }
+};
   if (loading) return <div>Loading challenges...</div>;
   if (error) return <div className="error">{error}</div>;
 
@@ -101,9 +128,6 @@ const ChallengeList = () => {
               <span>Reward: {challenge.reward_points} points</span>
             </div>
             <div className="challenge-actions">
-              <Link to={`/challenge/${challenge.id}`} className="btn btn-info">
-                Details
-              </Link>
               {!challenge.joined && (
                 <button 
                   onClick={() => handleJoinChallenge(challenge.id)}

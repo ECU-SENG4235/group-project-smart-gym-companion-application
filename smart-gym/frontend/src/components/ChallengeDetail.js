@@ -14,9 +14,8 @@ const ChallengeDetail = () => {
   useEffect(() => {
     const fetchChallengeData = async () => {
       try {
-        // Get challenge details
         const token = localStorage.getItem("token");
-        const challengeRes = await axios.get(`http://localhost:4000/api/challenges/${id}`, 
+        const challengeRes = await axios.get(`http:/localhost:4000/api/challenges/${id}`, 
            { headers: { Authorization: `Bearer ${token}` } }
         );
         setChallenge(challengeRes.data);
@@ -24,13 +23,13 @@ const ChallengeDetail = () => {
         // Check if user is participating
         try {
           const token = localStorage.getItem("token");
-          const userChallengeRes = await axios.get(`http://localhost:4000/api/challenges/${id}/user`, 
+          const userChallengeRes = await axios.get(`/api/challenges/${id}/user`, 
             { headers: { Authorization: `Bearer ${token}` } }
           );
           setUserChallenge(userChallengeRes.data);
           setProgress(userChallengeRes.data.progress);
         } catch (err) {
-          // User hasn't joined this challenge yet
+  
           setUserChallenge(null);
         }
         
@@ -42,15 +41,41 @@ const ChallengeDetail = () => {
       }
     };
 
+    console.log("Raw token:", localStorage.getItem("token"));
+
     fetchChallengeData();
   }, [id]);
 
   const handleJoinChallenge = async () => {
     try {
-      const res = await axios.post(`http://localhost:4000/api/challenges/${id}/join`);
+      const token = localStorage.getItem("token");
+      
+      if (!token) {
+        console.error("No token found in localStorage.");
+        setError('No token found. Please log in again.');
+        return;
+      }
+      
+      // Log the raw token and auth header
+      console.log("Raw token:", token);
+      console.log("Auth header:", `Bearer ${token}`);
+      
+      const res = await axios.post(
+        `http://localhost:4000/api/challenges/${id}/join`,
+        {},
+        { 
+          headers: { 
+            Authorization: `Bearer ${token}` // Remove .trim() if it was still there
+          } 
+        }
+      );
+      
+      console.log("Response:", res.data);
       setUserChallenge(res.data.userChallenge);
       setProgress(0);
+      
     } catch (err) {
+      console.error("Full error:", err);
       setError('Failed to join challenge');
     }
   };
