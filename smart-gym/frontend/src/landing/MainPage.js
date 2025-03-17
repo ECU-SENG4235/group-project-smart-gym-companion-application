@@ -86,7 +86,7 @@ const MainPage = () => {
     };
 
     const handleBrowseChallenges = () => {
-        navigate('/challenges');
+        navigate("/challenges");
     };
     
     return (
@@ -104,6 +104,7 @@ const MainPage = () => {
                     <button onClick={() => navigate("/calorie-tracker")}>Calorie Tracker</button>
                     <button onClick={() => navigate("/progress-report")}>Progress Report</button>
                     <button onClick={() => navigate("/challenges")}>Challenges</button>
+                    <button onClick={() => navigate("/coaching")}>Coaching</button>
                     <button onClick={() => navigate("/profile")}>Profile</button>
                 </div>
             </nav>
@@ -167,6 +168,30 @@ const MainPage = () => {
                         )}
                     </div>
                 </div>
+            </div>
+            
+            {/* Bottom Navigation */}
+            <div className="bottom-navigation">
+                <button className="nav-button active">
+                    <span className="nav-icon">📊</span>
+                    <span>Activity</span>
+                </button>
+                <button className="nav-button" onClick={() => navigate('/coaching')}>
+                    <span className="nav-icon">🎬</span>
+                    <span>Coaching</span>
+                </button>
+                <button className="nav-button" onClick={() => navigate('/workout')}>
+                    <span className="nav-icon">💪</span>
+                    <span>Workout</span>
+                </button>
+                <button className="nav-button" onClick={() => navigate('/profile')}>
+                    <span className="nav-icon">👤</span>
+                    <span>Profile</span>
+                </button>
+                <button className="nav-button">
+                    <span className="nav-icon">👨‍🏫</span>
+                    <span>Trainer</span>
+                </button>
             </div>
         </div>
     );
