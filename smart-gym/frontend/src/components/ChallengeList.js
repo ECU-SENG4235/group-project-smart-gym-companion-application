@@ -10,7 +10,7 @@ const ChallengeList = () => {
   const [userChallenges, setUserChallenges] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-    const [progress, setProgress] = useState(0);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -73,8 +73,6 @@ const handleJoinChallenge = async (challengeId) => {
       return;
     }
     
-    console.log("Raw token:", token);
-    console.log("Auth header:", `Bearer ${token}`);
     console.log("Joining challenge with ID:", challengeId);
     
     const res = await axios.post(
