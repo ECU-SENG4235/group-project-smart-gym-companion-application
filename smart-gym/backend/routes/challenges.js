@@ -32,6 +32,26 @@ router.get("/user", authenticateUser, (req, res) => {
   );
 });
 
+router.get("/:challengeId", authenticateUser, (req, res) => {
+    const { challengeId } = req.params;
+    
+    db.get(
+      `SELECT * FROM challenges WHERE id = ?`,
+      [challengeId],
+      (err, challenge) => {
+        if (err) {
+          return res.status(500).json({ error: err.message });
+        }
+        
+        if (!challenge) {
+          return res.status(404).json({ error: "Challenge not found" });
+        }
+        
+        res.json(challenge);
+      }
+    );
+  });
+
 router.post("/:challengeId/join", authenticateUser, (req, res) => {
   const { challengeId } = req.params;
   const userId = req.user.id;

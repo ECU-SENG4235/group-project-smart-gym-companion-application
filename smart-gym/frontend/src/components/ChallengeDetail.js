@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, useNavigate } from 'react-router-dom';
 import "./challenge-detail.css";
 import axios from 'axios';
 
@@ -10,12 +10,13 @@ const ChallengeDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [progress, setProgress] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchChallengeData = async () => {
       try {
         const token = localStorage.getItem("token");
-        const challengeRes = await axios.get(`http:/localhost:4000/api/challenges/${id}`, 
+        const challengeRes = await axios.get(`http://localhost:4000/api/challenges/${id}`, 
            { headers: { Authorization: `Bearer ${token}` } }
         );
         setChallenge(challengeRes.data);
@@ -23,7 +24,7 @@ const ChallengeDetail = () => {
         // Check if user is participating
         try {
           const token = localStorage.getItem("token");
-          const userChallengeRes = await axios.get(`/api/challenges/${id}/user`, 
+          const userChallengeRes = await axios.get(`http://localhost:4000/api/challenges/${id}/user`, 
             { headers: { Authorization: `Bearer ${token}` } }
           );
           setUserChallenge(userChallengeRes.data);
@@ -111,10 +112,10 @@ const ChallengeDetail = () => {
         
         {!userChallenge ? (
           <button 
-            onClick={handleJoinChallenge}
+            onClick={() => navigate('/main')}
             className="btn btn-lg btn-primary"
           >
-            Join This Challenge
+            Back to Home
           </button>
         ) : (
           <div className="challenge-progress">
