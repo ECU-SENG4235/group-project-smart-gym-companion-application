@@ -1,22 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import "./user-challenges.css"
 import axios from 'axios';
 
 const UserChallenges = () => {
   const [activeChallenges, setActiveChallenges] = useState([]);
   const [completedChallenges, setCompletedChallenges] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchUserChallenges = async () => {
       try {
-        const res = await axios.get('http://localhost:4000/api/challenges/user');
+        const token = localStorage.getItem("token");
+        const res = await axios.get('http://localhost:4000/api/challenges/user',
+        { headers: { Authorization: `Bearer ${token}` } }
+        )
+
+        const challenges = res.data.userChallenges
+
+        console.log("API Response:", res.data)
 
         const active = [];
         const completed = [];
         
-        res.data.forEach(userChallenge => {
+        challenges.forEach(userChallenge => {
           if (userChallenge.completed === 1) {
             completed.push(userChallenge);
           } else {
@@ -28,6 +37,7 @@ const UserChallenges = () => {
         setCompletedChallenges(completed);
         setLoading(false);
       } catch (err) {
+        console.error(err.response ? err.response.data : err.message);
         setError('Failed to load your challenges');
         setLoading(false);
       }
@@ -35,6 +45,10 @@ const UserChallenges = () => {
 
     fetchUserChallenges();
   }, []);
+
+  const handleContinue = (challengeId) => {
+    navigate(`/challenge/${challengeId}`);
+  };
 
   if (loading) return <div>Loading your challenges...</div>;
   if (error) return <div className="error">{error}</div>;
@@ -60,11 +74,13 @@ const UserChallenges = () => {
                     style={{ width: `${(userChallenge.progress / userChallenge.target) * 100}%` }}
                   ></div>
                 </div>
-                <p>{userChallenge.progress} / {userChallenge.target}</p>
+                <p>{Math.round((userChallenge.progress / userChallenge.target) * 100)}%</p>
               </div>
-              <Link to={`/challenge/${userChallenge.challenge_id}`} className="btn btn-primary">
+              <button
+                className="btn-primary" 
+                onClick ={() => handleContinue(userChallenge.challenge_id)} >
                 Continue Challenge
-              </Link>
+              </button>
             </div>
           ))}
         </div>
