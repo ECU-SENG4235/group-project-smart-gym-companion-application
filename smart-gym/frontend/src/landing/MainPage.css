@@ -72,6 +72,11 @@ body {
     max-width: 400px;
 }
 
+.left-section h2 {
+    margin-top: -5px;
+    margin-bottom: 15px;
+}
+
 /* Date and Time Display */
 .date-time {
     font-size: 18px;

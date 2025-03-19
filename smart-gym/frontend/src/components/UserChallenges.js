@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import "./user-challenges.css"
+import BackButton from "../img/back-button.png";
 import axios from 'axios';
 
 const UserChallenges = () => {
@@ -55,7 +56,10 @@ const UserChallenges = () => {
 
   return (
     <div className="user-challenges">
-      <h2>My Challenges</h2>
+      <div className="header-container">
+        <img src={BackButton} alt="Back" className="back-button" onClick={() => navigate(-1)} />
+        <h2>My Challenges</h2>
+      </div>
       
       <h3>Active Challenges</h3>
       {activeChallenges.length === 0 ? (
