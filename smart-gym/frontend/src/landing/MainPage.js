@@ -103,7 +103,7 @@ const MainPage = () => {
                     <button onClick={() => navigate("/workout-log")}>Workout Log</button>
                     <button onClick={() => navigate("/calorie-tracker")}>Calorie Tracker</button>
                     <button onClick={() => navigate("/progress-report")}>Progress Report</button>
-                    <button onClick={() => navigate("/challenges")}>Challenges</button>
+                    <button onClick={() => navigate("/my-challenges")}>Challenges</button>
                     <button onClick={() => navigate("/coaching")}>Coaching</button>
                     <button onClick={() => navigate("/profile")}>Profile</button>
                 </div>

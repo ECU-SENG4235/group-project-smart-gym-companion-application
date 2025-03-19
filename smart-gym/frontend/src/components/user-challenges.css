@@ -18,6 +18,24 @@
     padding: 10px;
 }
 
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-container h2 {
+    margin-top: 20px;
+}
+
+.back-button {
+    cursor: pointer;
+    height: 25px;
+    width: 25px;
+    margin-top: 0px;
+    margin-left: 10px;
+}
+
 .challenge-list {
     list-style-type: none;
     padding: 10px;
