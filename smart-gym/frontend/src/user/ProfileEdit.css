@@ -1,7 +1,5 @@
+/* Global Styles */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -11,8 +9,11 @@
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     width: 100%;
-    max-width: 500px;
-    margin: 2rem auto;
+    margin-top: 80px;
+    box-sizing: border-box;
+    padding: 2rem; /* Padding around the edges */
+    display: flex;
+    flex-direction: column;
 }
 
 .profile-title {
@@ -28,12 +29,14 @@
 
 .form-row {
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem; /* Increased gap for better spacing */
     margin-bottom: 1rem;
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
 }
 
 .form-row .form-group {
     flex: 1;
+    min-width: 200px; /* Ensure fields don’t get too narrow */
     margin-bottom: 0;
 }
 
@@ -107,7 +110,7 @@ input[type="file"] {
 
 .checkbox-group {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* More columns for wider layout */
     gap: 0.5rem;
     margin-top: 0.5rem;
 }
@@ -122,8 +125,9 @@ input[type="file"] {
     width: auto;
 }
 
-button {
-    width: 100%;
+/* Specific styles for Save Profile and Back to Home buttons */
+.save-profile-btn {
+    width: 200px; /* Smaller width for better desktop layout */
     padding: 0.75rem;
     background: #007bff;
     color: white;
@@ -132,11 +136,34 @@ button {
     font-size: 1rem;
     cursor: pointer;
     transition: background 0.3s;
-    margin-top: 1rem;
 }
 
-button:hover {
+.save-profile-btn:hover {
     background: #0056b3;
+}
+
+.back-to-home-btn {
+    width: 200px; /* Smaller width for better desktop layout */
+    padding: 0.75rem;
+    background: transparent;
+    color: #007bff;
+    border: 1px solid #007bff;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+}
+
+.back-to-home-btn:hover {
+    background: #007bff;
+    color: white;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1rem;
 }
 
 .error {

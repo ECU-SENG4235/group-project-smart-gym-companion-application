@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import DailyTip from '../components/DailyTip'; // Import DailyTip
 import "./MainPage.css";
 
 const MainPage = () => {
@@ -91,24 +92,6 @@ const MainPage = () => {
     
     return (
         <div className="main-container">
-            {/* Navigation Bar */}
-            <nav className="navbar">
-                <h1 className="logo">Smart Gym Companion</h1>
-                <div className="hamburger" onClick={toggleNav}>
-                    <div className={`line ${isNavOpen ? 'open' : ''}`}></div>
-                    <div className={`line ${isNavOpen ? 'open' : ''}`}></div>
-                    <div className={`line ${isNavOpen ? 'open' : ''}`}></div>
-                </div>
-                <div className={`nav-links ${isNavOpen ? 'open' : ''}`}>
-                    <button onClick={() => navigate("/workout-log")}>Workout Log</button>
-                    <button onClick={() => navigate("/calorie-tracker")}>Calorie Tracker</button>
-                    <button onClick={() => navigate("/progress-report")}>Progress Report</button>
-                    <button onClick={() => navigate("/my-challenges")}>Challenges</button>
-                    <button onClick={() => navigate("/coaching")}>Coaching</button>
-                    <button onClick={() => navigate("/profile")}>Profile</button>
-                </div>
-            </nav>
-
             {/* Page Content - Left Aligned */}
             <div className="content">
                 <div className="left-section">
@@ -193,6 +176,9 @@ const MainPage = () => {
                     <span>Trainer</span>
                 </button>
             </div>
+
+            {/* Daily Tip at the Bottom */}
+            <DailyTip />
         </div>
     );
 };

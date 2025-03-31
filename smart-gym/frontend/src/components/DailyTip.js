@@ -18,12 +18,14 @@ const DailyTip = () => {
     }, []);
 
     return (
-        <div style={styles.container}>
-            {loading ? (
-                <p style={styles.loading}>Loading...</p> 
-            ) : (
-                <p style={styles.tip}><strong>Daily Tip:</strong> {tip}</p>
-            )}
+        <div className="dailytips">
+            <div style={styles.container}> 
+                {loading ? (
+                    <p style={styles.loading}>Loading...</p> 
+                ) : (
+                    <p style={styles.tip}><strong>Daily Tip:</strong> {tip}</p>
+                )}
+            </div>  
         </div>
     );
 };
@@ -32,7 +34,6 @@ const styles = {
     container: {
         padding: "15px",
         backgroundColor: "#f3f3f3",
-        borderRadius: "8px",
         textAlign: "center",
         marginTop: "20px",
         width: "80%",
