@@ -12,16 +12,18 @@ const workoutRoutes = require("./routes/workouts");
 const profileRoutes = require('./routes/profile');
 const notificationRoutes = require("./routes/DailyNotifications");
 const challengeRoutes = require("./routes/challenges");
+const socialSharingRoutes = require("./routes/socialSharing");
+const goalRoutes = require("./routes/goals");
 
 app.use(express.json());
 app.use(cors());
 app.use("/api/workouts", workoutRoutes);
-app.use("/api/calories", calorieRoutes)
+app.use("/api/calories", calorieRoutes);
 app.use("/api/DailyNotifications", notificationRoutes); // Register new route for daily tips
 app.use('/profile', profileRoutes);
 app.use("/api/challenges", challengeRoutes);
-
-
+app.use("/api/share", socialSharingRoutes); 
+app.use("/api/goals", goalRoutes); // Register new route for goals
 
 const db = new sqlite3.Database("./userdb.db", sqlite3.OPEN_READWRITE, (err) => {
     if (err) return console.error(err.message);
@@ -46,7 +48,7 @@ cron.schedule("0 9 * * *", () => {
 db.run(`ALTER TABLE users ADD COLUMN points INTEGER DEFAULT 0`, [], (err) => {
     // Ignore error if column already exists
     console.log("Ensuring users table has points column");
-  });
+});
 
 app.post("/login", async (req, res) => {
     const { email, password } = req.body;
@@ -67,7 +69,6 @@ app.post("/login", async (req, res) => {
     });
 });
 
-
 app.post("/signup", async (req, res) => {
     const { email, password } = req.body;
 
@@ -86,6 +87,5 @@ app.post("/signup", async (req, res) => {
         }
     });
 });
-
 
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));

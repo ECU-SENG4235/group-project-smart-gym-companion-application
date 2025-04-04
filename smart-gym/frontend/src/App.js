@@ -11,6 +11,8 @@ import ChallengeList from "./components/ChallengeList"
 import ChallengeDetail from "./components/ChallengeDetail"
 import UserChallenges from "./components/UserChallenges"
 import Navbar from './components/Navbar';
+import GoalSetting from './goals/GoalSetting';
+import GoalLog from './goals/GoalLog';
 
 function App() {
   return (
@@ -51,6 +53,16 @@ function App() {
           <Route path="/my-challenges" element={<>
             <Navbar />
             <UserChallenges />
+          </>} />
+
+          <Route path="/set-goal" element={<>
+            <Navbar />
+            <GoalSetting />
+          </>} />
+
+          <Route path="/goals" element={<>
+            <Navbar />
+            <GoalLog />
           </>} />
         </Routes>
       </Router>

@@ -41,7 +41,7 @@ const Navbar = () => {
                 <button onClick={() => handleNavigation("/calorie-tracker")}>Calorie Tracker</button>
                 <button onClick={() => handleNavigation("/progress-report")}>Progress Report</button>
                 <button onClick={() => handleNavigation("/my-challenges")}>Challenges</button>
-                <button onClick={() => handleNavigation("/coaching")}>Coaching</button>
+                <button onClick={() => handleNavigation("/goals")}>Goals</button>
                 <button onClick={() => handleNavigation("/profile")}>Profile</button>
             </div>
         </nav>

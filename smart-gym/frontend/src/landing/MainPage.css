@@ -25,6 +25,9 @@ body {
     margin-top: 60px;
     width: 100%;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Space between the columns */
 
 }
 
@@ -46,16 +49,16 @@ button:hover {
 }
 
 
-
 /* Content Layout */
 .content {
     display: flex;
-    justify-content: flex-start;
     padding: 40px 20px;
+    flex-direction: column;
 }
 
 .left-section {
     max-width: 400px;
+    flex: 1;
 }
 
 .left-section h2 {
@@ -107,8 +110,17 @@ button:hover {
 
 /* Add these styles to your MainPage.css file */
 
+.challenges-goals-container {
+    display: flex; /* Use flexbox to align challenges and goals side by side */
+    flex-direction: row;
+    margin-top: 10px;
+    gap: 1rem;
+}
+
 /* Challenge Section Styles */
-.challenge-section {
+.challenge-section, .goal-section {
+    flex: 1;
+    margin: 0.5rem;
     margin-top: 1.5rem;
     background-color: #fff;
     border-radius: 8px;
@@ -270,3 +282,71 @@ button:hover {
     background-color: #0055b3;
 }
 
+.goal-section {
+    margin-right: 0;
+}
+
+.goal-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem; /* Space between goal cards */
+}
+
+.goal-card {
+    background-color: #f8f9fa; /* Light background for goal cards */
+    border-radius: 6px; /* Rounded corners */
+    padding: 1rem; /* Padding inside the card */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: transform 0.2s; /* Transition for hover effect */
+}
+
+.goal-card:hover {
+    transform: translateY(-3px); /* Lift effect on hover */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Deeper shadow on hover */
+}
+
+.goal-card h4 {
+    margin-top: 0; /* Remove top margin */
+    margin-bottom: 0.5rem; /* Space below the title */
+    font-size: 1.1rem; /* Font size for goal title */
+    color: #222; /* Dark color for title */
+}
+
+.goal-card p {
+    margin: 0.5rem 0; /* Space above and below paragraphs */
+    color: #666; /* Gray color for description */
+}
+
+.set-goal-btn {
+    background-color: transparent;
+    color: #0066cc;
+    border: none;
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 0.3rem 0.5rem;
+    border-radius: 4px;
+}
+
+.set-goal-btn:hover {
+    background-color: #f0f7ff;
+    text-decoration: underline;
+}
+
+.no-goals {
+    text-align: center; /* Center the no-goals message */
+    padding: 1.5rem; /* Padding inside the no-goals section */
+    background-color: #f8f9fa; /* Light background */
+    border-radius: 6px; /* Rounded corners */
+}
+
+.no-goals p {
+    margin-bottom: 1rem; /* Space below the message */
+    color: #666; /* Gray color for text */
+}
+
+@media screen and (max-width: 768px) {
+    .challenges-goals-container {
+        flex-direction: column; /* Stack challenges and goals vertically */
+    }
+    
+}
