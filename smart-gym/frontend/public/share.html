@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SmartGym Share</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+    }
+    .share-buttons a {
+      display: inline-block;
+      margin: 10px 10px 0 0;
+      padding: 10px 15px;
+      border-radius: 5px;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+    }
+    .twitter { background: #1DA1F2; }
+    .facebook { background: #3b5998; }
+    .copy { background: #555; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>🎉 Share Your Fitness Wins!</h1>
+  <p id="shareText">Loading your progress...</p>
+  <div class="share-buttons">
+    <a id="twitterBtn" class="twitter" target="_blank">Share on Twitter</a>
+    <a id="facebookBtn" class="facebook" target="_blank">Share on Facebook</a>
+    <button id="copyBtn" class="copy">Copy for Instagram</button>
+  </div>
+
+  <script>
+    async function fetchShareData() {
+      const token = localStorage.getItem("token"); // JWT stored after login
+      const timeframe = "week"; // change as needed: day, week, month
+
+      try {
+        const res = await fetch(`http://localhost:4000/api/share/workout-summary?timeframe=${timeframe}`, {
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        });
+
+        const data = await res.json();
+        if (!data.success) {
+          document.getElementById("shareText").textContent = "Error fetching summary.";
+          return;
+        }
+
+        document.getElementById("shareText").textContent = data.shareText;
+        document.getElementById("twitterBtn").href = data.shareLinks.twitter;
+        document.getElementById("facebookBtn").href = data.shareLinks.facebook;
+
+        document.getElementById("copyBtn").onclick = () => {
+          navigator.clipboard.writeText(data.shareLinks.instagram.copyText);
+          alert("Copied text for Instagram!");
+        };
+      } catch (err) {
+        document.getElementById("shareText").textContent = "Failed to load data.";
+        console.error(err);
+      }
+    }
+
+    fetchShareData();
+  </script>
+</body>
+</html>
