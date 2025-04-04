@@ -43,9 +43,15 @@ function App() {
             <ProgressReport />
           </>} />
           
-          <Route path="/challenges" element={<ChallengeList />} />
+          <Route path="/challenges" element={<>
+            <Navbar />
+            <ChallengeList />
+            </>} />
           <Route path="/challenge/:id" element={<ChallengeDetail />} />
-          <Route path="/my-challenges" element={<UserChallenges />} />
+          <Route path="/my-challenges" element={<>
+            <Navbar />
+            <UserChallenges />
+          </>} />
         </Routes>
       </Router>
   );
