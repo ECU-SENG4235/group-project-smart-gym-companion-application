@@ -16,12 +16,11 @@ code {
     monospace;
 }
 
-div #root {
-  width: 300%;
+#root {
+  width: 100%;
   height: 100%;
-  max-width: 800px;
-  display: flex;       /* Use flexbox to manage layout */
-  flex-direction: column; /* Stack children vertically */
-  justify-content: center; /* Center content vertically */
-  align-items: center;    /* Center content horizontally */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
 }
