@@ -9,6 +9,8 @@ const MainPage = () => {
     const [todayWorkouts, setTodayWorkouts] = useState("Loading workouts...");
     const [todayCalories, setTodayCalories] = useState("Loading calories...");
     const [isNavOpen, setIsNavOpen] = useState(false);
+    const [goals, setGoals] = useState([]);
+    const [error, setError] = useState("");
     const [activeChallenges, setActiveChallenges] = useState([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
@@ -31,6 +33,7 @@ const MainPage = () => {
     useEffect(() => {
         updateTodaySummary();
         fetchActiveChallenges();
+        fetchGoals();
     }, []);
 
     const updateTodaySummary = async () => {
@@ -89,6 +92,35 @@ const MainPage = () => {
     const handleBrowseChallenges = () => {
         navigate("/challenges");
     };
+
+    const handleSetGoal =() =>{
+        navigate("/set-goal");
+    }
+
+    const fetchGoals = async () => {
+        try {
+            const response = await axios.get('http://localhost:4000/api/goals/user', {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+
+            // Log the entire response object for debugging
+            console.log('API Response:', response); // Log the full response object
+            console.log('Response Data:', response.data); // Log the data part of the response
+
+            // Since the response is an array, set the goals directly
+            if (Array.isArray(response.data)) {
+                setGoals(response.data);
+            } else {
+                throw new Error('Expected response to be an array');
+            }
+        } catch (err) {
+            setError(err.response?.data?.error || 'An error occurred while fetching goals');
+            console.error('Error fetching goals:', err); // Log the error for debugging
+        }
+    };
+
     
     return (
         <div className="main-container">
@@ -104,53 +136,81 @@ const MainPage = () => {
                         <p>{todayCalories}</p>
                     </div>
                     
-                    {/* Challenges Section */}
-                    <div className="challenge-section">
-                        <div className="section-header">
-                            <h3>Active Challenges</h3>
-                            <button onClick={handleBrowseChallenges} className="browse-btn">Browse All</button>
-                        </div>
-                        
-                        {loading ? (
-                            <p>Loading challenges...</p>
-                        ) : activeChallenges.length > 0 ? (
-                            <div className="challenge-cards">
-                                {activeChallenges.slice(0, 3).map(challenge => (
-                                    <div key={challenge.id} className="challenge-card">
-                                        <h4>{challenge.title}</h4>
-                                        <div className="progress-container">
-                                            <div className="progress-bar-wrapper">
-                                                <div 
-                                                    className="progress-bar" 
-                                                    style={{ width: `${(challenge.progress / challenge.target) * 100}%` }}
-                                                ></div>
+                    <div className="challenges-goals-container">
+                        {/* Challenges Section */}
+                        <div className="challenge-section">
+                            <div className="section-header">
+                                <h3>Active Challenges</h3>
+                                <button onClick={handleBrowseChallenges} className="browse-btn">Browse All</button>
+                            </div>
+                            
+                            {loading ? (
+                                <p>Loading challenges...</p>
+                            ) : activeChallenges.length > 0 ? (
+                                <div className="challenge-cards">
+                                    {activeChallenges.slice(0, 3).map(challenge => (
+                                        <div key={challenge.id} className="challenge-card">
+                                            <h4>{challenge.title}</h4>
+                                            <div className="progress-container">
+                                                <div className="progress-bar-wrapper">
+                                                    <div 
+                                                        className="progress-bar" 
+                                                        style={{ width: `${(challenge.progress / challenge.target) * 100}%` }}
+                                                    ></div>
+                                                </div>
+                                                <p>{Math.round((challenge.progress / challenge.target) * 100)}%</p>
                                             </div>
-                                            <p>{Math.round((challenge.progress / challenge.target) * 100)}%</p>
+                                            <button 
+                                                onClick={() => handleContinueChallenge(challenge.challenge_id)}
+                                                className="continue-btn"
+                                            >
+                                                Continue
+                                            </button>
                                         </div>
-                                        <button 
-                                            onClick={() => handleContinueChallenge(challenge.challenge_id)}
-                                            className="continue-btn"
-                                        >
-                                            Continue
-                                        </button>
-                                    </div>
-                                ))}
-                                
-                                {activeChallenges.length > 3 && (
-                                    <div className="more-challenges">
-                                        <p>+ {activeChallenges.length - 3} more</p>
-                                        <button onClick={handleBrowseChallenges}>View All</button>
-                                    </div>
+                                    ))}
+                                    
+                                    {activeChallenges.length > 3 && (
+                                        <div className="more-challenges">
+                                            <p>+ {activeChallenges.length - 3} more</p>
+                                            <button onClick={handleBrowseChallenges}>View All</button>
+                                        </div>
+                                    )}
+                                </div>
+                            ) : (
+                                <div className="no-challenges">
+                                    <p>You haven't joined any challenges yet.</p>
+                                    <button onClick={handleBrowseChallenges}>Browse Challenges</button>
+                                </div>
+                            )}
+                        </div>
+
+
+                        {/* Goals Section */}
+                        <div className="goal-section">
+                            <div className="section-header">
+                                <h3>Active Goals</h3>
+                                <button onClick={handleSetGoal} className="set-goal-btn">Set New Goal</button>
+                            </div>
+                            
+                            {loading ? (
+                                <p>Loading goals...</p>
+                            ) : goals.length > 0 ? (
+                                <div className="goal-cards">
+                                    {goals.map(goal => (
+                                        <div key={goal.id} className="goal-card">
+                                            <h4>{goal.title}</h4>
+                                            <p>{goal.description}</p>
+                                            <p>Duration: {goal.duration}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                                ) : (
+                                <div className="no-goals">
+                                    <p>You haven't set any goals yet.</p>
+                                </div>
                                 )}
-                            </div>
-                        ) : (
-                            <div className="no-challenges">
-                                <p>You haven't joined any challenges yet.</p>
-                                <button onClick={handleBrowseChallenges}>Browse Challenges</button>
-                            </div>
-                        )}
+                        </div>
                     </div>
-                </div>
             </div>
             
             {/* Bottom Navigation */}
@@ -179,6 +239,7 @@ const MainPage = () => {
 
             {/* Daily Tip at the Bottom */}
             <DailyTip />
+            </div>
         </div>
     );
 };

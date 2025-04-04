@@ -12,7 +12,8 @@ const workoutRoutes = require("./routes/workouts");
 const profileRoutes = require('./routes/profile');
 const notificationRoutes = require("./routes/DailyNotifications");
 const challengeRoutes = require("./routes/challenges");
-const socialSharingRoutes = require("./routes/socialSharing"); // Add the new social sharing routes
+const socialSharingRoutes = require("./routes/socialSharing");
+const goalRoutes = require("./routes/goals");
 
 app.use(express.json());
 app.use(cors());
@@ -21,7 +22,8 @@ app.use("/api/calories", calorieRoutes);
 app.use("/api/DailyNotifications", notificationRoutes); // Register new route for daily tips
 app.use('/profile', profileRoutes);
 app.use("/api/challenges", challengeRoutes);
-app.use("/api/share", socialSharingRoutes); // Register the new social sharing routes
+app.use("/api/share", socialSharingRoutes); 
+app.use("/api/goals", goalRoutes); // Register new route for goals
 
 const db = new sqlite3.Database("./userdb.db", sqlite3.OPEN_READWRITE, (err) => {
     if (err) return console.error(err.message);
