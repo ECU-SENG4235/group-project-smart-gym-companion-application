@@ -10,6 +10,7 @@ import ProfileEdit from "./user/ProfileEdit";
 import ChallengeList from "./components/ChallengeList"
 import ChallengeDetail from "./components/ChallengeDetail"
 import UserChallenges from "./components/UserChallenges"
+import WorkoutInput from './workoutPlans/WorkoutInput';
 import Navbar from './components/Navbar';
 import GoalSetting from './goals/GoalSetting';
 import GoalLog from './goals/GoalLog';
@@ -63,6 +64,10 @@ function App() {
           <Route path="/goals" element={<>
             <Navbar />
             <GoalLog />
+          </>} />
+          <Route path="/workout-plans" element={<>
+            <Navbar />
+            <WorkoutInput />
           </>} />
         </Routes>
       </Router>
