@@ -1,3 +1,54 @@
+.workout-input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 160px;
+    width: 100%;
+}
+
+.remove-wrkout {
+    position: relative;
+    top: 0;
+    right: 0;
+    width: 20px;
+    top: -110px;
+    left: 440px;
+    height: 20px;
+    font-size: 16px;
+    line-height: 1;
+    background: #f44336;
+    color: white;
+    border: none;
+    border-radius: 25%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.workout-card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    width: 40%;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+.work-hdr {
+    margin-bottom: 20px;
+}
+
 .workout-form {
-    margin-top: 90px;
+    margin-top: 20px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.workout-map {
+    width: 100%;
+    margin-top: 20px;
+    border-bottom: 3px solid #000;
+    padding-bottom: 8px;
 }
