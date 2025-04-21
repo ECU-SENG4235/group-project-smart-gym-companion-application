@@ -25,7 +25,7 @@ app.use('/profile', profileRoutes);
 app.use("/api/challenges", challengeRoutes);
 app.use("/api/share", socialSharingRoutes); 
 app.use("/api/goals", goalRoutes);
-app.use("/api/workoutplans", workoutPlansRoutes);
+app.use("/api/workout-plans", workoutPlansRoutes);
 
 const db = new sqlite3.Database("./new_userdb.db", sqlite3.OPEN_READWRITE, (err) => {
     if (err) return console.error(err.message);
